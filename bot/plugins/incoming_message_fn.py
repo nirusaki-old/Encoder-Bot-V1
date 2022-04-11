@@ -347,7 +347,7 @@ async def incoming_compress_message_f(update):
         chat_id=update.chat.id,
         document=o,
         caption=caption,
-        force_document=False,
+        force_document=TrueS,
         #duration=duration,
         thumb="thumb.jpg",
         reply_to_message_id=update.message_id,
