@@ -3,7 +3,7 @@
 # (c) @Nirusaki
 
 from bot.get_cfg import get_config
-from helper_funcs import out_put_file_name
+from bot.helper_funcs.ffmpeg import out_put_file_name
 
 
 class Localisation:
