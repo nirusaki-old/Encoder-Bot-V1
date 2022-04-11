@@ -3,6 +3,7 @@
 # (c) @Nirusaki
 
 from bot.get_cfg import get_config
+from helper_funcs import out_put_file_name
 
 
 class Localisation:
@@ -23,7 +24,7 @@ class Localisation:
     
     RCHD_TG_API_LIMIT = "Downloaded in {} seconds.\nDetected File Size: {}\nSorry. But, I cannot upload files greater than 1.95GB due to Telegram API limitations."
     
-    COMPRESS_SUCCESS = "©️ @FIERCENETWORK"
+    COMPRESS_SUCCESS = out_put_file_name
 
     COMPRESS_PROGRESS = "⏳ ETA: {}\n🚀 Progress: {}%"
 
