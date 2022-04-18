@@ -47,7 +47,7 @@ async def convert_video(video_file, output_directory, total_time, bot, message, 
     bit.append("yuv420p")
     preset.append("-i wm.png -filter_complex 'overlay=5:5")
     watermark.append("-i 'https://te.legra.ph/file/e9408e71281cdcb017874.png' -filter_complex 'overlay= main_w-(overlay_w+10):main_h-(overlay_h+10)'")
-    file_genertor_command = f'ffmpeg -hide_banner -loglevel quiet -progress "{progress}" -i "{video_file}" -c:v libx265  -crf {crf[0]} -c:s copy -s 640x480 -preset faster -map 0 -metadata title="Visit For More Movies [@FIERCENETWORK In Telegram]"  -metadata:s:v title="Visit Website[Nirusaki Fierce_Toons] t.me/AniXpo] - 480p - HEVC - 8bit"  -metadata:s:a title="[Visit WWW.FIERCENETWORK2.BLOGSPOT.COM] - Opus - 48kbps" -metadata:s:s title="[AniXpo Substations Alpha]" -c:a libopus -b:a 48k -vbr 2 -ac 2 "{out_put_file_name}" -y'
+    file_genertor_command = f'ffmpeg -hide_banner -loglevel quiet -progress "{progress}" -i "{video_file}" -c:v libx265 {watermark[0]}  -crf {crf[0]} -c:s copy -s 640x480 -preset faster -map 0 -metadata title="Visit For More Movies [@FIERCENETWORK In Telegram]"  -metadata:s:v title="Visit Website[Nirusaki Fierce_Toons] t.me/AniXpo] - 480p - HEVC - 8bit"  -metadata:s:a title="[Visit WWW.FIERCENETWORK2.BLOGSPOT.COM] - Opus - 48kbps" -metadata:s:s title="[AniXpo Substations Alpha]" -c:a libopus -b:a 48k -vbr 2 -ac 2 "{out_put_file_name}" -y'
  #For Ffmpeg Use
     COMPRESSION_START_TIME = time.time()
     process = await asyncio.create_subprocess_shell(
