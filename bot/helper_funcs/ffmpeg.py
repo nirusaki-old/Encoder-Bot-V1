@@ -33,7 +33,7 @@ async def convert_video(video_file, output_directory, total_time, bot, message, 
     # https://stackoverflow.com/a/13891070/4723940
     kk = video_file.split("/")[-1]
     aa = kk.split(".")[-1]
-    out_put_file_name = kk.replace(f".{aa}", " [FIERCENETWORK].mkv")
+    out_put_file_name = kk.replace(f".{aa}", " [@FIERCENETWORK].mkv")
     #out_put_file_name = video_file + "_compressed" + ".mkv"
     progress = output_directory + "/" + "progress.txt"
     with open(progress, 'w') as f:
@@ -42,12 +42,12 @@ async def convert_video(video_file, output_directory, total_time, bot, message, 
     ##"-metadata", "title=@SenpaiAF", "-vf", "drawtext=fontfile=njnaruto.ttf:fontsize=20:fontcolor=black:x=15:y=15:text=" "Dark Encodes",
      ## -vf eq=gamma=1.4:saturation=1.4
      ## lol 😂
-    crf.append("27")
+    crf.append("34")
     resolution.append("854x480")
     bit.append("yuv420p")
     preset.append("-i wm.png -filter_complex 'overlay=5:5")
-    watermark.append('-vf "drawtext=fontfile=font.ttf:fontsize=25:fontcolor=black:bordercolor=white@1.00:x=20:y=h-80*t:textfile=txt.txt"')
-    file_genertor_command = f'ffmpeg -hide_banner -loglevel quiet -progress "{progress}" -i "{video_file}" -c:v libx265  -crf {crf[0]} -c:s copy -preset veryfast {watermark[0]} -map 0 -metadata title="Visit For More Movies [WWW.FIERCENETWORK2.BLOGSPOT.COM]"  -metadata:s:v title="Visit Website[Fierce Toons] WWW.FIERCENETWORK2.BLOGSPOT.COM] - 720p - HEVC - 10bit"  -metadata:s:a title="[Visit WWW.FIERCENETWORK2.BLOGSPOT.COM] - Opus -128kbps" -metadata:s:s title="[Fierce Network Substations]" -c:a libopus -b:a 64k "{out_put_file_name}" -y'
+    watermark.append("-i 'https://te.legra.ph/file/e9408e71281cdcb017874.png' -filter_complex 'overlay= main_w-(overlay_w+10):main_h-(overlay_h+10)'")
+    file_genertor_command = f'ffmpeg -hide_banner -loglevel quiet -progress "{progress}" -i "{video_file}" -c:v libx265  -crf {crf[0]} -c:s copy -s 640x480 -preset faster -map 0 -metadata title="Visit For More Movies [@FIERCENETWORK In Telegram]"  -metadata:s:v title="Visit Website[Nirusaki Fierce_Toons] t.me/AniXpo] - 480p - HEVC - 8bit"  -metadata:s:a title="[Visit WWW.FIERCENETWORK2.BLOGSPOT.COM] - Opus - 48kbps" -metadata:s:s title="[AniXpo Substations Alpha]" -c:a libopus -b:a 48k -vbr 2 -ac 2 "{out_put_file_name}" -y'
  #For Ffmpeg Use
     COMPRESSION_START_TIME = time.time()
     process = await asyncio.create_subprocess_shell(
