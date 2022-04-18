@@ -9,8 +9,7 @@ LOGGER = logging.getLogger(__name__)
 import os, time, asyncio, json
 from bot.localisation import Localisation
 from bot import (
-  DOWNLOAD_LOCATION, 
-  AUTH_USERS,
+  DOWNLOAD_LOCATION,
   LOG_CHANNEL,
   UPDATES_CHANNEL,
   SESSION_NAME,
@@ -21,14 +20,14 @@ from bot.helper_funcs.ffmpeg import (
   convert_video,
   media_info,
   take_screen_shot,
-  out_put_file_name
+    out_put_file_name,
 )
 from bot.helper_funcs.display_progress import (
   progress_for_pyrogram,
   TimeFormatter,
   humanbytes
 )
-
+from bot.config import Config
 from pyrogram import Client, filters
 from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 from pyrogram.types import ChatPermissions, InlineKeyboardMarkup, InlineKeyboardButton
@@ -37,9 +36,9 @@ from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant, Usern
 #from bot.helper_funcs.utils import(
 #  delete_downloads
 #)
-os.system("wget https://te.legra.ph/file/ed0102d22b0b94cb89cda.jpg -O thumb.jpg")
+os.system("wget https://telegra.ph/file/5c4635e173e7407694a63.jpg -O thumb.jpg")
 
-#LOGZ = -1001283278354
+#LOGS_CHANNEL = -1001283278354
 CURRENT_PROCESSES = {}
 CHAT_FLOOD = {}
 broadcast_ids = {}
@@ -88,7 +87,7 @@ async def incoming_start_message_f(bot, update):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton('SOURCE CODE 🤤', url='https://t.me/fiercenetwork')
+                    InlineKeyboardButton('SOURCE CODE', url='https://t.me/tellybots')
                 ]
             ]
         ),
@@ -225,8 +224,8 @@ async def incoming_compress_message_f(update):
         )
       )
       saved_file_path = video
-      LOGGER.info(saved_file_path)  
-      LOGGER.info(video)
+      Config.LOGGER.info(saved_file_path)  
+      Config.LOGGER.info(video)
       if( video is None ):
         try:
           await sent_message.edit_text(
@@ -244,7 +243,7 @@ async def incoming_compress_message_f(update):
         except:
           pass
        # delete_downloads()
-        LOGGER.info("Download stopped")
+        Config.LOGGER.info("Download stopped")
         return
   except (ValueError) as e:
       try:
@@ -278,7 +277,7 @@ async def incoming_compress_message_f(update):
     #  pass
    # return
   
-  f os.path.exists(saved_file_path):
+  if os.path.exists(saved_file_path):
     downloaded_time = TimeFormatter((time.time() - d_start)*1000)
     duration, bitrate = await media_info(saved_file_path)
     if duration is None or bitrate is None:
@@ -326,7 +325,7 @@ async def incoming_compress_message_f(update):
            compress_start
          )
     compressed_time = TimeFormatter((time.time() - c_start)*1000)
-    LOGGER.info(o)
+    Config.LOGGER.info(o)
     if o == 'stopped':
       return
     if o is not None:
@@ -350,6 +349,8 @@ async def incoming_compress_message_f(update):
         caption=out_put_file_name,
         supports_streaming=True,
         duration=duration,
+        w=1280,
+        h=720,
         thumb=thumb_image_path,
         reply_to_message_id=update.message_id,
         progress=progress_for_pyrogram,
@@ -363,7 +364,7 @@ async def incoming_compress_message_f(update):
       if(upload is None):
         try:
           await sent_message.edit_text(
-            text="Upload Stopped"
+            text="Upload stopped"
           )
           chat_id = LOG_CHANNEL
           utc_now = datetime.datetime.utcnow()
@@ -390,7 +391,7 @@ async def incoming_compress_message_f(update):
       now = f"\n{ist} (GMT+05:30)`\n`{bst} (GMT+06:00)"
       await upload_start.delete()
       await bot.send_message(chat_id, f"**Upload Done, Bot is Free Now !!** \n\nProcess Done at `{now}`", parse_mode="markdown")
-      LOGGER.info(upload.caption);
+      Config.LOGGER.info(upload.caption);
       try:
         await upload.edit_caption(
           caption=upload.caption.replace('{}', uploaded_time)
@@ -430,15 +431,6 @@ async def incoming_compress_message_f(update):
     
 async def incoming_cancel_message_f(bot, update):
   """/cancel command"""
-  #if update.from_user.id != 1391975600 or 888605132 or 1760568371:
-  if update.from_user.id not in AUTH_USERS:      
-        
-    try:
-      await update.message.delete()
-    except:
-      pass
-    return
-
   status = DOWNLOAD_LOCATION + "/status.json"
   if os.path.exists(status):
     inline_keyboard = []
