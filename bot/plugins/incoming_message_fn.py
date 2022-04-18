@@ -39,7 +39,7 @@ from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant, Usern
 #)
 os.system("wget https://te.legra.ph/file/ed0102d22b0b94cb89cda.jpg -O thumb.jpg")
 
-LOGZ = -1001283278354
+#LOGZ = -1001283278354
 CURRENT_PROCESSES = {}
 CHAT_FLOOD = {}
 broadcast_ids = {}
@@ -359,8 +359,6 @@ async def incoming_compress_message_f(update):
           sent_message,
           u_start
         )
-          chat_id = LOG_CHANNEL
-          await upload.forward(chat_id)
       )
       if(upload is None):
         try:
