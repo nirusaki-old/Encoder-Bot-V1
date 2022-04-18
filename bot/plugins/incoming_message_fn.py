@@ -20,7 +20,8 @@ from bot import (
 from bot.helper_funcs.ffmpeg import (
   convert_video,
   media_info,
-  take_screen_shot
+  take_screen_shot,
+  out_put_file_name
 )
 from bot.helper_funcs.display_progress import (
   progress_for_pyrogram,
@@ -38,7 +39,7 @@ from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant, Usern
 #)
 os.system("wget https://te.legra.ph/file/ed0102d22b0b94cb89cda.jpg -O thumb.jpg")
 
-#LOGS_CHANNEL = -1001283278354
+LOGZ = -1001283278354
 CURRENT_PROCESSES = {}
 CHAT_FLOOD = {}
 broadcast_ids = {}
@@ -277,7 +278,7 @@ async def incoming_compress_message_f(update):
     #  pass
    # return
   
-  if os.path.exists(saved_file_path):
+  f os.path.exists(saved_file_path):
     downloaded_time = TimeFormatter((time.time() - d_start)*1000)
     duration, bitrate = await media_info(saved_file_path)
     if duration is None or bitrate is None:
@@ -346,10 +347,10 @@ async def incoming_compress_message_f(update):
       upload = await bot.send_document(
         chat_id=update.chat.id,
         document=o,
-        caption=caption,
-        force_document=TrueS,
-        #duration=duration,
-        thumb="thumb.jpg",
+        caption=out_put_file_name,
+        supports_streaming=True,
+        duration=duration,
+        thumb=thumb_image_path,
         reply_to_message_id=update.message_id,
         progress=progress_for_pyrogram,
         progress_args=(
@@ -362,7 +363,7 @@ async def incoming_compress_message_f(update):
       if(upload is None):
         try:
           await sent_message.edit_text(
-            text="Upload stopped"
+            text="Upload Stopped"
           )
           chat_id = LOG_CHANNEL
           utc_now = datetime.datetime.utcnow()
