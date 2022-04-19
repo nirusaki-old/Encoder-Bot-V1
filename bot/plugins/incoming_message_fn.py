@@ -359,8 +359,6 @@ async def incoming_compress_message_f(update):
           sent_message,
           u_start
         )
-          chat_id = LOG_CHANNEL
-          await upload.forward(chat_id)
       )
       if(upload is None):
         try:
